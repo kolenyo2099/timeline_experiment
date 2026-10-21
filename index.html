@@ -1263,7 +1263,10 @@ function draw() {
       const g = mark(byId.get(id));
       /* Between the line and the label strip above it; any higher and it runs
          under a region's item count. */
-      add("rect", { x: xa + .5, y: y - 8.5 * TS, width: Math.max(xb - xa - 1, 1), height: 4.5 * TS,
+      /* A clear gap and rounded ends, so a run of busy months reads as so many
+         months, not one long bar. */
+      const gap = Math.min(4, (xb - xa) * .25);
+      add("rect", { x: xa + gap / 2, y: y - 8.5 * TS, width: Math.max(xb - xa - gap, 1), height: 4.5 * TS, rx: 1.5,
         fill: "url(#hatch)", opacity: .15 + .85 * Math.sqrt(items.length / maxCell),
         stroke: LAYERS.meetings.colour, "stroke-width": .6 }, g);
       hit(g, (xa + xb) / 2, y - 6 * TS, xb - xa, 9);
